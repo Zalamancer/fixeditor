@@ -25,12 +25,9 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
-  devIndicators: {
-    buildActivity: false,
-  },
   experimental: {
-    allowedDevOrigins: ['https://*.cloudworkstations.dev'],
   },
+  allowedDomains: ["*.cloudworkstations.dev"],
 };
 
 export default nextConfig;
