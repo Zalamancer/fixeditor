@@ -15,6 +15,14 @@ const provider = new WebsocketProvider(
   doc
 );
 
+provider.on('status', event => {
+  console.log('Websocket status:', event.status); // logs "connected" or "disconnected"
+});
+
+provider.on('sync', (isSynced: boolean) => {
+  console.log('Websocket sync status:', isSynced);
+});
+
 // Our <Editor> component we can reuse later
 export default function Editor() {
   // Creates a new editor instance.
