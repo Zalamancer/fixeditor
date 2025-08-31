@@ -9,7 +9,6 @@ import { WebsocketProvider } from "y-websocket";
 const doc = new Y.Doc();
 // More providers at: https://github.com/yjs/yjs#yjs-providers
 const provider = new WebsocketProvider(
-  // Use a public server in this example
   "ws://localhost:1234",
   "my-roomname",
   doc
