@@ -25,8 +25,6 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
-  experimental: {
-  },
   allowedDevOrigins: ["*.cloudworkstations.dev"],
 };
 
