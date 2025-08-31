@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   experimental: {
   },
-  allowedDomains: ["*.cloudworkstations.dev"],
+  allowedDevOrigins: ["*.cloudworkstations.dev"],
 };
 
 export default nextConfig;
