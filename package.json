@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 9009",
-    "websocket": "HOST=localhost PORT=1234 node ./node_modules/y-websocket/bin/server.js",
+    "websocket": "y-websocket",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
