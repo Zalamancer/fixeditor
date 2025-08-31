@@ -3,20 +3,17 @@ import "@blocknote/core/fonts/inter.css";
 import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
-import { createClient } from "@/lib/supabase/client";
-import { SupabaseProvider } from "y-supabase";
 import * as Y from "yjs";
+import { WebsocketProvider } from "y-websocket";
 
-const supabase = createClient();
 const doc = new Y.Doc();
-
-// A basic Supabase real-time provider
-const provider = new SupabaseProvider(doc, supabase, {
-  channel: "documents",
-  id: "document-1",
-  tableName: "documents",
-  columnName: "data",
-});
+// More providers at: https://github.com/yjs/yjs#yjs-providers
+const provider = new WebsocketProvider(
+  // Use a public server in this example
+  "ws://localhost:1234",
+  "my-roomname",
+  doc
+);
 
 // Our <Editor> component we can reuse later
 export default function Editor() {

@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack -p 9002",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
+    "websocket:dev": "HOST=localhost PORT=1234 npx y-websocket",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -58,7 +59,7 @@
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
-    "y-supabase": "^0.0.4-7",
+    "y-websocket": "^2.0.3",
     "yjs": "^13.6.27",
     "zod": "^3.24.2"
   },
