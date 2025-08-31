@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 9002",
-    "websocket": "HOST=localhost PORT=1234 npx y-websocket",
+    "dev": "next dev --turbopack -p 9009",
+    "websocket": "HOST=localhost PORT=1234 node ./node_modules/y-websocket/bin/server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
