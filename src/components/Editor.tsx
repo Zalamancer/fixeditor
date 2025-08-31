@@ -23,6 +23,14 @@ provider.on('sync', (isSynced: boolean) => {
   console.log('Websocket sync status:', isSynced);
 });
 
+provider.on('connection-error', error => {
+  console.error('Websocket connection error:', error);
+})
+
+provider.on('connection-close', event => {
+  console.warn('Websocket connection closed:', event);
+})
+
 // Our <Editor> component we can reuse later
 export default function Editor() {
   // Creates a new editor instance.
