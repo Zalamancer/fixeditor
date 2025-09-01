@@ -1,38 +1,32 @@
 "use client";
 
 import { BlockNoteEditor } from "@blocknote/core";
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteViewRaw, useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
-import { useEffect, useState } from "react";
-import { WebsocketProvider } from "y-websocket";
+import SupabaseProvider from "y-supabase";
 import * as Y from "yjs";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 
 export default function Editor() {
   const [doc, setDoc] = useState<Y.Doc>();
-  const [provider, setProvider] = useState<WebsocketProvider>();
+  const [provider, setProvider] = useState<SupabaseProvider>();
 
-  // Sets up the Y.js document and Websocket provider
+  // Sets up the Y.js document and Supabase provider
   useEffect(() => {
     const yDoc = new Y.Doc();
-    // Use `ws` for local development
-    const yProvider = new WebsocketProvider(
-      "ws://localhost:1234",
-      "my-roomname",
-      yDoc
-    );
+    const supabase = createClient();
+    // Supabase provider
+    const yProvider = new SupabaseProvider(yDoc, supabase, {
+      channel: "documents",
+      tableName: "documents",
+      columnName: "content",
+      id: "1",
+    });
 
     yProvider.on("status", (event: any) => {
-      console.log("WebSocket status:", event.status);
+      console.log("Supabase status:", event.status);
     });
-    
-    yProvider.on('error', (event: any) => {
-      console.error('Websocket connection error: ', event)
-    });
-
-    yProvider.on('close', (event: any) => {
-      console.log('Websocket connection closed: ', event)
-    });
-
 
     setDoc(yDoc);
     setProvider(yProvider);
@@ -45,16 +39,18 @@ export default function Editor() {
 
   // Creates a BlockNote editor instance
   const editor: BlockNoteEditor | null = useCreateBlockNote({
-    collaboration: {
-      // Passes in the Y.js provider and document
-      provider,
-      fragment: doc?.getXmlFragment("document"),
-      // You can add a name and color for each user
-      user: {
-        name: "User",
-        color: "#ff0000",
-      },
-    },
+    collaboration:
+      provider && doc
+        ? {
+            provider,
+            fragment: doc.getXmlFragment("document"),
+            // You can add a name and color for each user
+            user: {
+              name: "User",
+              color: "#ff0000",
+            },
+          }
+        : undefined,
   });
 
   if (!editor || !provider) {
@@ -67,7 +63,7 @@ export default function Editor() {
       <h1 className="mb-4 text-2xl font-bold">
         Collaborative BlockNote Editor
       </h1>
-      <BlockNoteView editor={editor} theme={"light"} />
+      <BlockNoteViewRaw editor={editor} theme={"light"} />
     </div>
   );
 }
